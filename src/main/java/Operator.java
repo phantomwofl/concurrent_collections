@@ -2,8 +2,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Operator extends Thread {
 
-    final int THREE = 3000;
-    final int SEC = 1000;
+    final int PROCESSING = 3000;
     private ConcurrentLinkedQueue<Call> queue;
 
     Operator (ConcurrentLinkedQueue queue) {
@@ -13,11 +12,10 @@ public class Operator extends Thread {
     @Override
     public void run () {
         try {
-            Thread.sleep(SEC);
-            while (queue.size() != 0) {
-                Thread.sleep(THREE);
+            while (!queue.isEmpty()) {
                 queue.poll();
                 System.out.println("Звонок принят");
+                Thread.sleep(PROCESSING);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
